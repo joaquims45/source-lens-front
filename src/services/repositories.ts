@@ -1,5 +1,12 @@
 import { apiRequest } from '@/hooks/api/client'
-import type { Analysis, FileDetail, FileSummary, SubmitRepositoryResponse } from '@/types/api'
+import type {
+  Analysis,
+  ArchitectureComponent,
+  ArchitectureGraph,
+  FileDetail,
+  FileSummary,
+  SubmitRepositoryResponse,
+} from '@/types/api'
 
 export function submitRepository(url: string, ref?: string): Promise<SubmitRepositoryResponse> {
   return apiRequest<SubmitRepositoryResponse>('/repositories', {
@@ -19,4 +26,17 @@ export function listFiles(analysisId: string): Promise<FileSummary[]> {
 
 export function getFile(analysisId: string, fileId: string): Promise<FileDetail> {
   return apiRequest<FileDetail>(`/analyses/${analysisId}/files/${fileId}`)
+}
+
+export function getArchitecture(analysisId: string): Promise<ArchitectureGraph> {
+  return apiRequest<ArchitectureGraph>(`/analyses/${analysisId}/architecture`)
+}
+
+export function getArchitectureComponent(
+  analysisId: string,
+  componentId: string,
+): Promise<ArchitectureComponent> {
+  return apiRequest<ArchitectureComponent>(
+    `/analyses/${analysisId}/architecture/components/${encodeURIComponent(componentId)}`,
+  )
 }

@@ -117,3 +117,67 @@ export interface ChatMessage {
   citations: Citation[]
   pending?: boolean
 }
+
+export type ArchitectureNodeType =
+  | 'application'
+  | 'module'
+  | 'controller'
+  | 'service'
+  | 'repository'
+  | 'database'
+  | 'cache'
+  | 'queue'
+  | 'worker'
+  | 'external_api'
+  | 'infrastructure'
+  | 'authentication'
+
+export type ArchitectureEdgeType =
+  | 'imports'
+  | 'calls'
+  | 'depends_on'
+  | 'reads'
+  | 'writes'
+  | 'publishes'
+  | 'consumes'
+  | 'exposes'
+  | 'authenticates_with'
+
+export interface ArchitectureEvidence {
+  file: string
+  line: number
+  reason: string
+  origin: 'static' | 'heuristic' | 'llm'
+}
+
+export interface ArchitectureNode {
+  id: string
+  label: string
+  type: ArchitectureNodeType
+  confidence: number
+  source_files: string[]
+  metadata: Record<string, unknown>
+  evidence: ArchitectureEvidence[]
+}
+
+export interface ArchitectureEdge {
+  source: string
+  target: string
+  type: ArchitectureEdgeType
+  confidence: number
+  evidence: ArchitectureEvidence[]
+}
+
+export interface ArchitectureGraph {
+  name: string
+  schema_version: string
+  nodes: ArchitectureNode[]
+  edges: ArchitectureEdge[]
+  warnings: string[]
+}
+
+export interface ArchitectureComponent {
+  node: ArchitectureNode
+  incoming: ArchitectureEdge[]
+  outgoing: ArchitectureEdge[]
+}
