@@ -6,6 +6,8 @@ import type {
   FileDetail,
   FileSummary,
   SubmitRepositoryResponse,
+  SymbolSummary,
+  SymbolTrace,
 } from '@/types/api'
 
 export function submitRepository(url: string, ref?: string): Promise<SubmitRepositoryResponse> {
@@ -39,4 +41,13 @@ export function getArchitectureComponent(
   return apiRequest<ArchitectureComponent>(
     `/analyses/${analysisId}/architecture/components/${encodeURIComponent(componentId)}`,
   )
+}
+
+export function searchSymbols(analysisId: string, query: string): Promise<SymbolSummary[]> {
+  const params = query ? `?q=${encodeURIComponent(query)}` : ''
+  return apiRequest<SymbolSummary[]>(`/analyses/${analysisId}/symbols${params}`)
+}
+
+export function getSymbolTrace(analysisId: string, symbolId: string): Promise<SymbolTrace> {
+  return apiRequest<SymbolTrace>(`/analyses/${analysisId}/symbols/${symbolId}/trace`)
 }

@@ -181,3 +181,29 @@ export interface ArchitectureComponent {
   incoming: ArchitectureEdge[]
   outgoing: ArchitectureEdge[]
 }
+
+export type CallResolution = 'resolved' | 'ambiguous'
+
+export interface TraceSymbol {
+  id: string
+  path: string
+  qualified_name: string
+  kind: string
+  start_line: number
+  end_line: number
+  signature: string
+}
+
+export interface TraceEdge {
+  symbol: TraceSymbol
+  line: number
+  resolution: CallResolution
+  confidence: number
+  candidates: string[]
+}
+
+export interface SymbolTrace {
+  symbol: TraceSymbol
+  callers: TraceEdge[]
+  callees: TraceEdge[]
+}
