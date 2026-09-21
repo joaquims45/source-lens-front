@@ -2,11 +2,12 @@
 
 React/TypeScript frontend for **SourceLens** — the developer-tool UI on top
 of `source-lens-api`'s repository ingestion, hybrid search, grounded chat
-agent and architecture graph. This README covers **Milestone 4 — SourceLens
-Web** (onboarding, analysis progress, the workspace shell, chat, citations,
-Monaco, the file explorer) and **Milestone 5 — Architecture Intelligence**
-(the React Flow graph). Dependency/call tracing (Milestone 6) is still a
-"not built yet" placeholder, since its backend doesn't exist yet.
+agent, architecture graph and dependency tracer. This README covers
+**Milestone 4 — SourceLens Web** (onboarding, analysis progress, the
+workspace shell, chat, citations, Monaco, the file explorer),
+**Milestone 5 — Architecture Intelligence** (the React Flow graph) and
+**Milestone 6 — Dependency Tracing** (who calls this / what this calls).
+Remaining work is Milestone 7 (production hardening).
 
 ## Stack
 
@@ -74,6 +75,19 @@ through to Files, exactly like a chat citation) and dependencies. A
 repository with no detected signals shows an explicit empty state rather
 than a blank canvas.
 
+## Dependency tracing
+
+`Dependencies` pairs a debounced symbol search (`GET /symbols?q=`) with
+`GET /symbols/{id}/trace`, rendered as three fixed rows — callers above, the
+selected symbol centered, callees below — matching the PLAN's own example
+diagram. Each row scrolls independently: a well-tested symbol can have
+dozens of test-fixture callers, and the selected symbol must stay visible
+regardless (this is exactly the layout bug a real end-to-end smoke test
+caught — see Testing below). Every caller/callee card shows resolved vs.
+ambiguous with its confidence and is clickable both to re-center the trace
+on it (drilling deeper into the call chain) and to jump to its source in
+Files.
+
 ## Running locally
 
 ```bash
@@ -104,8 +118,9 @@ npm run build           # production build; also type-checks
 
 There is no component test suite yet — the app was verified with a
 Playwright smoke run through the full flow (submit → live progress →
-workspace → files/Monaco → insights → architecture graph) against the real
-backend, which is how a real routing bug (sidebar links nesting under the
-active tab instead of replacing it) and a fitView/toolbar overlap on the
-architecture graph were caught and fixed. Component/integration tests are a
-Milestone 7 hardening item.
+workspace → files/Monaco → insights → architecture graph → dependency trace)
+against the real backend, which is how three real bugs were caught and
+fixed: a routing bug (sidebar links nesting under the active tab instead of
+replacing it), a fitView/toolbar overlap on the architecture graph, and the
+dependency-trace layout burying the selected symbol below dozens of caller
+cards. Component/integration tests are a Milestone 7 hardening item.
