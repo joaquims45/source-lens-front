@@ -1,18 +1,17 @@
 # source-lens-web
 
 React/TypeScript frontend for **SourceLens** — the developer-tool UI on top
-of `source-lens-api`'s repository ingestion, hybrid search and grounded chat
-agent. This README covers **Milestone 4 — SourceLens Web**: onboarding,
-analysis progress, the workspace shell, chat, citations, Monaco and the file
-explorer. Architecture/dependency visualization (React Flow) are wired up as
-navigation but show honest "not built yet" placeholders until Milestones 5/6
-land on the backend.
+of `source-lens-api`'s repository ingestion, hybrid search, grounded chat
+agent and architecture graph. This README covers **Milestone 4 — SourceLens
+Web** (onboarding, analysis progress, the workspace shell, chat, citations,
+Monaco, the file explorer) and **Milestone 5 — Architecture Intelligence**
+(the React Flow graph). Dependency/call tracing (Milestone 6) is still a
+"not built yet" placeholder, since its backend doesn't exist yet.
 
 ## Stack
 
 React 19, TypeScript, Vite, Tailwind CSS v4, TanStack Query, React Router,
-Monaco Editor, React Flow (installed now, used from Milestone 5), Lucide
-Icons.
+Monaco Editor, React Flow, Lucide Icons.
 
 ## Project structure
 
@@ -64,6 +63,17 @@ frontend never invents or reformats a citation from the model's prose.
 Clicking one navigates to the Files view at that exact path/line range and
 highlights it in Monaco.
 
+## Architecture graph
+
+`Architecture` renders `GET /analyses/{id}/architecture` with React Flow: a
+simple column-by-type layout (application → modules → controllers/services →
+repositories → infrastructure — no layout library needed at this graph
+size), nodes styled/iconed by type, a type filter toolbar, and a side panel
+for a selected node showing its confidence, cited evidence (clickable
+through to Files, exactly like a chat citation) and dependencies. A
+repository with no detected signals shows an explicit empty state rather
+than a blank canvas.
+
 ## Running locally
 
 ```bash
@@ -94,7 +104,8 @@ npm run build           # production build; also type-checks
 
 There is no component test suite yet — the app was verified with a
 Playwright smoke run through the full flow (submit → live progress →
-workspace → files/Monaco → insights) against the real backend, which is how
-a real routing bug (sidebar links nesting under the active tab instead of
-replacing it) was caught and fixed. Component/integration tests are a
+workspace → files/Monaco → insights → architecture graph) against the real
+backend, which is how a real routing bug (sidebar links nesting under the
+active tab instead of replacing it) and a fitView/toolbar overlap on the
+architecture graph were caught and fixed. Component/integration tests are a
 Milestone 7 hardening item.
