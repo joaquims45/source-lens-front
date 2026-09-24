@@ -1,7 +1,7 @@
 # source-lens-web
 
 React/TypeScript frontend for **SourceLens** — the developer-tool UI on top
-of `source-lens-api`'s repository ingestion, hybrid search, grounded chat
+of `source-lens-back`'s repository ingestion, hybrid search, grounded chat
 agent, architecture graph and dependency tracer.
 
 ## Stack
@@ -103,7 +103,7 @@ npm install
 npm run dev            # http://localhost:5173, proxies /api to :8000
 ```
 
-Requires `source-lens-api` running locally (`docker compose up -d` in that
+Requires `source-lens-back` running locally (`docker compose up -d` in that
 repo) — see its README. Without `ANTHROPIC_API_KEY` set there, chat fails
 with a clear inline error while everything else (ingestion, search, files,
 insights) keeps working.
