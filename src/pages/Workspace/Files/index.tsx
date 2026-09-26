@@ -35,6 +35,7 @@ export default function Files() {
     if (!match) return
     const start = Number(searchParams.get('start'))
     const end = Number(searchParams.get('end'))
+    // oxlint-disable-next-line react/set-state-in-effect
     setSelected({
       path: match.path,
       fileId: match.id,

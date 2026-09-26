@@ -26,7 +26,12 @@ export function ConversationHistory({ analysisId, onSelect, onNewChat }: Convers
 
       {open && (
         <>
-          <div className="fixed inset-0 z-10" onClick={() => setOpen(false)} />
+          <button
+            type="button"
+            aria-label="Close menu"
+            className="fixed inset-0 z-10 cursor-default"
+            onClick={() => setOpen(false)}
+          />
           <div className="absolute right-0 z-20 mt-1 w-72 rounded-md border border-border bg-surface shadow-lg">
             <button
               type="button"

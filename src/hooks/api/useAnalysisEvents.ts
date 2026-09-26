@@ -31,10 +31,15 @@ export function useAnalysisEvents(analysisId: string | undefined) {
     status: 'connecting',
     error: null,
   })
+  const [trackedAnalysisId, setTrackedAnalysisId] = useState(analysisId)
+
+  if (analysisId !== trackedAnalysisId) {
+    setTrackedAnalysisId(analysisId)
+    setState({ stages: {}, status: 'connecting', error: null })
+  }
 
   useEffect(() => {
     if (!analysisId) return
-    setState({ stages: {}, status: 'connecting', error: null })
     const source = new EventSource(apiUrl(`/analyses/${analysisId}/events`))
 
     const applyStage = (event: MessageEvent<string>) => {
