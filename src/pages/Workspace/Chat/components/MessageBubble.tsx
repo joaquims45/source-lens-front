@@ -1,4 +1,5 @@
 import { CitationChip } from '@/components/CitationChip/CitationChip'
+import { Markdown } from '@/components/Markdown/Markdown'
 import { Spinner } from '@/components/Spinner/Spinner'
 import type { ChatMessage } from '@/types/api'
 import { cn } from '@/utils/cn'
@@ -20,7 +21,7 @@ export function MessageBubble({ message, activeTool }: { message: ChatMessage; a
             {activeTool ? `Running ${activeTool}…` : 'Thinking…'}
           </span>
         ) : (
-          <p className="whitespace-pre-wrap">{message.content}</p>
+          <Markdown content={message.content} />
         )}
       </div>
       {message.citations.length > 0 && (

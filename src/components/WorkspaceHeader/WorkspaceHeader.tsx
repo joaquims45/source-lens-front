@@ -1,15 +1,9 @@
 import { ExternalLink } from 'lucide-react'
+import { Link } from 'react-router-dom'
 
 import { Badge } from '@/components/Badge/Badge'
+import { STATUS_TONE } from '@/utils/status'
 import type { Analysis } from '@/types/api'
-
-const STATUS_TONE: Record<Analysis['status'], 'neutral' | 'success' | 'warning' | 'danger'> = {
-  queued: 'neutral',
-  running: 'warning',
-  completed: 'success',
-  failed: 'danger',
-  cancelled: 'neutral',
-}
 
 export function WorkspaceHeader({ analysis }: { analysis: Analysis }) {
   const languages = analysis.capabilities.languages ?? []
@@ -17,7 +11,9 @@ export function WorkspaceHeader({ analysis }: { analysis: Analysis }) {
   return (
     <header className="flex h-12 shrink-0 items-center justify-between border-b border-border bg-surface px-4">
       <div className="flex items-center gap-3">
-        <span className="text-sm font-semibold text-text">SourceLens</span>
+        <Link to="/" className="text-sm font-semibold text-text hover:text-accent">
+          SourceLens
+        </Link>
         <span className="text-text-dim">/</span>
         <span className="text-sm text-text-muted">
           {analysis.repository.owner}/{analysis.repository.name}

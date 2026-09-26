@@ -116,6 +116,27 @@ export interface ChatMessage {
   content: string
   citations: Citation[]
   pending?: boolean
+  created_at?: string
+}
+
+export interface AnalysisListItem {
+  id: string
+  repository: RepositorySummary
+  status: Analysis['status']
+  created_at: string
+  completed_at: string | null
+}
+
+export interface ConversationSummary {
+  id: string
+  created_at: string
+  preview: string | null
+}
+
+export interface ConversationDetail {
+  id: string
+  created_at: string
+  messages: ChatMessage[]
 }
 
 export type ArchitectureNodeType =

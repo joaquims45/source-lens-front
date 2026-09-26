@@ -8,6 +8,15 @@ const MONACO_LANGUAGE_BY_BACKEND_LANGUAGE: Record<string, string> = {
   toml: 'ini',
   markdown: 'markdown',
   text: 'plaintext',
+  go: 'go',
+  rust: 'rust',
+  java: 'java',
+  csharp: 'csharp',
+  shell: 'shell',
+  sql: 'sql',
+  html: 'html',
+  css: 'css',
+  dockerfile: 'dockerfile',
 }
 
 export function toMonacoLanguage(backendLanguage: string): string {
@@ -24,6 +33,15 @@ const LANGUAGE_COLORS: Record<string, string> = {
   toml: '#9c4221',
   markdown: '#6b7280',
   text: '#6b7280',
+  go: '#00ADD8',
+  rust: '#dea584',
+  java: '#b07219',
+  csharp: '#178600',
+  shell: '#89e051',
+  sql: '#e38c00',
+  html: '#e34c26',
+  css: '#563d7c',
+  dockerfile: '#384d54',
 }
 
 export function languageColor(language: string): string {

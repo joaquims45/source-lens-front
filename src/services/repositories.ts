@@ -1,8 +1,11 @@
 import { apiRequest } from '@/hooks/api/client'
 import type {
   Analysis,
+  AnalysisListItem,
   ArchitectureComponent,
   ArchitectureGraph,
+  ConversationDetail,
+  ConversationSummary,
   FileDetail,
   FileSummary,
   SubmitRepositoryResponse,
@@ -18,8 +21,23 @@ export function submitRepository(url: string, ref?: string): Promise<SubmitRepos
   })
 }
 
+export function listAnalyses(): Promise<AnalysisListItem[]> {
+  return apiRequest<AnalysisListItem[]>('/analyses')
+}
+
 export function getAnalysis(analysisId: string, signal?: AbortSignal): Promise<Analysis> {
   return apiRequest<Analysis>(`/analyses/${analysisId}`, { signal })
+}
+
+export function listConversations(analysisId: string): Promise<ConversationSummary[]> {
+  return apiRequest<ConversationSummary[]>(`/analyses/${analysisId}/conversations`)
+}
+
+export function getConversation(
+  analysisId: string,
+  conversationId: string,
+): Promise<ConversationDetail> {
+  return apiRequest<ConversationDetail>(`/analyses/${analysisId}/conversations/${conversationId}`)
 }
 
 export function listFiles(analysisId: string): Promise<FileSummary[]> {

@@ -1,6 +1,8 @@
+import { useQueryClient } from '@tanstack/react-query'
 import { useCallback, useState } from 'react'
 
 import { apiUrl } from '@/hooks/api/client'
+import { getConversation } from '@/services/repositories'
 import type { ChatMessage, Citation } from '@/types/api'
 
 interface DonePayload {
@@ -27,6 +29,22 @@ export function useChatStream(analysisId: string | undefined) {
   const [conversationId, setConversationId] = useState<string>()
   const [activeTool, setActiveTool] = useState<string | null>(null)
   const [isStreaming, setIsStreaming] = useState(false)
+  const queryClient = useQueryClient()
+
+  const loadConversation = useCallback(
+    async (id: string) => {
+      if (!analysisId) return
+      const detail = await getConversation(analysisId, id)
+      setMessages(detail.messages)
+      setConversationId(detail.id)
+    },
+    [analysisId],
+  )
+
+  const startNewConversation = useCallback(() => {
+    setMessages([])
+    setConversationId(undefined)
+  }, [])
 
   const ask = useCallback(
     (question: string) => {
@@ -66,6 +84,7 @@ export function useChatStream(analysisId: string | undefined) {
         setConversationId(payload.conversation_id)
         setActiveTool(null)
         setIsStreaming(false)
+        queryClient.invalidateQueries({ queryKey: ['conversations', analysisId] })
         source.close()
       })
       source.onerror = () => {
@@ -81,8 +100,8 @@ export function useChatStream(analysisId: string | undefined) {
         source.close()
       }
     },
-    [analysisId, conversationId, isStreaming],
+    [analysisId, conversationId, isStreaming, queryClient],
   )
 
-  return { messages, ask, isStreaming, activeTool }
+  return { messages, ask, isStreaming, activeTool, loadConversation, startNewConversation }
 }

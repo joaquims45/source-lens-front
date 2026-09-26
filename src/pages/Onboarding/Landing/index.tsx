@@ -7,6 +7,8 @@ import { Spinner } from '@/components/Spinner/Spinner'
 import { useSubmitRepository } from '@/hooks/api/useSubmitRepository'
 import { ApiError } from '@/hooks/api/client'
 
+import { RecentAnalyses } from './components/RecentAnalyses'
+
 const URL_PATTERN = /^https:\/\/github\.com\/[\w.-]+\/[\w.-]+\/?$/
 
 export default function Landing() {
@@ -54,6 +56,8 @@ export default function Landing() {
         </div>
         {errorMessage && <p className="text-xs text-danger">{errorMessage}</p>}
       </form>
+
+      <RecentAnalyses />
     </div>
   )
 }

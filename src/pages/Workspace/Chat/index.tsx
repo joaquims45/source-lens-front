@@ -6,11 +6,13 @@ import { EmptyState } from '@/components/EmptyState/EmptyState'
 import { useChatStream } from '@/hooks/api/useChatStream'
 
 import { ChatInput } from './components/ChatInput'
+import { ConversationHistory } from './components/ConversationHistory'
 import { MessageBubble } from './components/MessageBubble'
 
 export default function Chat() {
   const { analysisId } = useParams()
-  const { messages, ask, isStreaming, activeTool } = useChatStream(analysisId)
+  const { messages, ask, isStreaming, activeTool, loadConversation, startNewConversation } =
+    useChatStream(analysisId)
   const bottomRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -19,6 +21,13 @@ export default function Chat() {
 
   return (
     <div className="flex h-full flex-col">
+      <div className="flex justify-end border-b border-border px-4 py-1.5">
+        <ConversationHistory
+          analysisId={analysisId}
+          onSelect={loadConversation}
+          onNewChat={startNewConversation}
+        />
+      </div>
       {messages.length === 0 ? (
         <EmptyState
           icon={MessageSquare}
