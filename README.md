@@ -1,4 +1,4 @@
-# source-lens-web
+# source-lens-front
 
 React/TypeScript frontend for **SourceLens** — the developer-tool UI on top
 of `source-lens-back`'s repository ingestion, hybrid search, grounded chat
