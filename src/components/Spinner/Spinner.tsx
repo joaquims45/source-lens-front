@@ -3,5 +3,12 @@ import { Loader2 } from 'lucide-react'
 import { cn } from '@/utils/cn'
 
 export function Spinner({ className }: { className?: string }) {
-  return <Loader2 className={cn('animate-spin text-text-muted', className)} size={16} />
+  return (
+    <Loader2
+      role="status"
+      aria-label="Loading"
+      className={cn('animate-spin text-text-muted', className)}
+      size={16}
+    />
+  )
 }

@@ -22,11 +22,13 @@ export function ChatInput({ onSubmit, disabled }: { onSubmit: (value: string) =>
           }
         }}
         rows={1}
+        aria-label="Message"
         placeholder="Ask anything about this codebase..."
         className="max-h-32 flex-1 resize-none rounded-md border border-border bg-bg px-3 py-2 text-sm text-text placeholder:text-text-dim focus:border-accent focus:outline-none"
       />
       <button
         onClick={submit}
+        aria-label="Send message"
         disabled={disabled || !value.trim()}
         className="flex size-8 shrink-0 items-center justify-center rounded-md bg-accent text-white transition-colors disabled:cursor-not-allowed disabled:opacity-40"
       >
